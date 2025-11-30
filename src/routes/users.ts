@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import { deleteDomain, newDomain } from "../functions.js";
+import { deleteDomain, getDomains, newDomain } from "../functions.js";
 const router = express.Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -105,6 +105,21 @@ router.delete("/domains", (req: Request, res: Response) => {
     else{
         res.status(401).json({
             error: "Login required"
+        });
+    }
+});
+
+router.get("/domains/:user", (req: Request, res: Response) => {
+    const domains = getDomains(req.params.user);
+
+    if(domains.length == 0){
+        res.status(404).json({
+            error: "User has no domains"
+        });
+    }
+    else{
+        res.json({
+            domains: domains
         });
     }
 });

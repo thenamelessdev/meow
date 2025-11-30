@@ -84,3 +84,18 @@ export function deleteDomain(domain: string, user: string) {
         return false;
     }
 }
+
+export function getDomains(user:string) {
+    const raw = readFileSync(db);
+    const json = JSON.parse(raw.toString());
+    let domains: string[] = [];
+
+    for (const domain in json.domains){
+        const info = json.domains[domain];
+        if(info.owner == user){
+            domains.push(domain);
+        }
+    }
+
+    return domains;
+}
