@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import { newDomain } from "../functions.js";
+import { deleteDomain, newDomain } from "../functions.js";
 const router = express.Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -81,6 +81,30 @@ router.post("/domains", (req: Request, res: Response) => {
     else{
         res.status(401).json({
             error: "Log in required"
+        });
+    }
+});
+
+router.delete("/domains", (req: Request, res: Response) => {
+    const { domain } = req.body;
+    const username = req.session.username;
+
+    if(username){
+        const removeDomain = deleteDomain(domain, username);
+        if(removeDomain){
+            res.status(200).json({
+                message: "Domain deleted"
+            });
+        }
+        else{
+            res.status(400).json({
+                error: "Domain name is not yours"
+            });
+        }
+    }
+    else{
+        res.status(401).json({
+            error: "Login required"
         });
     }
 });

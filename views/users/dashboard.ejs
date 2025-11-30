@@ -11,6 +11,7 @@
     <a href="/"><button>Homepage</button></a>
     <a href="/users/logout"><button>Logout</button></a>
     <hr>
+    <h3>Create domain</h3>
     <form action="/users/domains" method="post">
         <label for="domain">Domain: </label>
         <input type="text" name="domain" id="domain" required>
@@ -20,5 +21,51 @@
         <br>
         <input type="submit" value="Create domain">
     </form>
+    <br>
+
+    <h3>Delete domain</h3>
+    <form id="deleteForm" action="">
+        <label for="deleteDomain">Domain name: </label>
+        <input type="text" id="deleteDomain" required>
+        <br>
+        <!-- make this a non-submit button so clicking it doesn't submit the form -->
+        <button type="button" id="submitDelete">Delete domain</button>
+    </form>
+    <p id="deleteResult"></p>
+
+    <script>
+        const deleteForm = document.getElementById("deleteForm");
+        const deleteDomain = document.getElementById("deleteDomain");
+        const deleteSubmit = document.getElementById("submitDelete");
+        const deleteResult = document.getElementById("deleteResult");
+
+        deleteSubmit.addEventListener("click", async (e) => {
+            // prevent the form's default submit behavior just in case
+            e.preventDefault();
+
+            if(deleteForm.checkValidity()){
+                const result = await fetch("/users/domains", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        domain: deleteDomain.value
+                    })
+                });
+                const resultJson = await result.json();
+                if(result.ok){
+                    deleteResult.textContent = "Deleted domain"
+                }
+                else{
+                    deleteResult.textContent = `There was an error while deleting your domain`;
+                }
+            }
+            else{
+                // use the form element variable to report validity
+                deleteForm.reportValidity();
+            }
+        });
+    </script>
 </body>
 </html>

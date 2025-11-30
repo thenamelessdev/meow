@@ -58,3 +58,29 @@ export function newDomain(domain: string, owner: string, ip: string) {
         return false;
     }
 }
+
+export function deleteDomain(domain: string, user: string) {
+    const raw = readFileSync(db);
+    const json = JSON.parse(raw.toString());
+    let realDomain;
+
+    if(domain.startsWith("meow://")){
+        realDomain = domain;
+    }
+    else{
+        realDomain = "meow://" + domain;
+    }
+
+    if(!json.domains[realDomain]){
+        return false;
+    }
+
+    if(json.domains[realDomain].owner == user){
+        delete json.domains[realDomain];
+        writeFileSync(db, JSON.stringify(json));
+        return true;
+    }
+    else{
+        return false;
+    }
+}
