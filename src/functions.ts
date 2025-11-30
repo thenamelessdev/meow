@@ -1,6 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -30,6 +30,29 @@ export async function getWebsite(domain:string){
         else{
             return false;
         }
+    }
+    else{
+        return false;
+    }
+}
+
+export function newDomain(domain: string, owner: string, ip: string) {
+    const raw = readFileSync(db);
+    const json = JSON.parse(raw.toString());
+    let realDomain;
+    if(domain.startsWith("meow://")){
+        realDomain = domain;
+    }
+    else{
+        realDomain = "meow://" + domain;
+    }
+    if(!json.domains[realDomain]){
+        json.domains[realDomain] = {
+            owner: owner,
+            ip: ip
+        }
+        writeFileSync(db, JSON.stringify(json));
+        return true;
     }
     else{
         return false;

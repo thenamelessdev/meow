@@ -1,4 +1,5 @@
 import express, { Request, Response, Router } from "express";
+import { newDomain } from "../functions.js";
 const router = express.Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -62,6 +63,26 @@ router.get("/dashboard", (req: Request, res: Response) => {
 router.get("/logout", (req: Request, res: Response) => {
     req.session.username = undefined;
     res.redirect("/");
+});
+
+router.post("/domains", (req: Request, res: Response) => {
+    const { domain, ip } = req.body;
+    const username = req.session.username;
+
+    if(username){
+        const createDomain = newDomain(domain, username, ip);
+        if(createDomain){
+            res.send("Domain created!");
+        }
+        else{
+            res.render("error", { error: "Domain already exists" });
+        }
+    }
+    else{
+        res.status(401).json({
+            error: "Log in required"
+        });
+    }
 });
 
 export default router;

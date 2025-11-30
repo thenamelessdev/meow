@@ -11,6 +11,14 @@
     <a href="/"><button>Homepage</button></a>
     <a href="/users/logout"><button>Logout</button></a>
     <hr>
-    <p>Stuff coming soon</p>
+    <form action="/users/domains" method="post">
+        <label for="domain">Domain: </label>
+        <input type="text" name="domain" id="domain" required>
+        <br>
+        <label for="ip">Server's IP: </label>
+        <input type="text" name="ip" id="ip" required>
+        <br>
+        <input type="submit" value="Create domain">
+    </form>
 </body>
 </html>
