@@ -33,11 +33,15 @@
     </form>
     <p id="deleteResult"></p>
 
+    <p id="domains">Domains: loading...</p>
+
     <script>
         const deleteForm = document.getElementById("deleteForm");
         const deleteDomain = document.getElementById("deleteDomain");
         const deleteSubmit = document.getElementById("submitDelete");
         const deleteResult = document.getElementById("deleteResult");
+        const username = "<%= username %>"
+        const domainsText = document.getElementById("domains");
 
         deleteSubmit.addEventListener("click", async (e) => {
             // prevent the form's default submit behavior just in case
@@ -66,6 +70,19 @@
                 deleteForm.reportValidity();
             }
         });
+
+        async function updateDomains() {
+            const response = await fetch(`/users/domains/${username}`);
+            const responseJson = await response.json();
+            if(response.ok){
+                domainsText.textContent = `Domains: ${responseJson.domains}`;
+            }
+            else{
+                domainsText.textContent = "Domains: No domains";
+            }
+        }
+
+        updateDomains();
     </script>
 </body>
 </html>
