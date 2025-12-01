@@ -15,6 +15,15 @@ router.get("/", async (req: Request, res: Response) => {
                 res.render("error", { error: "Not found" });
             }
         }
+        else if(website.toString().startsWith("http://") || website.toString().startsWith("https://")){
+            const response = await fetch(website.toString());
+            if (response.ok){
+                res.render("website", { content: await response.text() ,title: website.toString(), description: "No description avaliable for http/https websites" })
+            }
+            else{
+                res.render("error", { error: "There was an error while making the request." });
+            }
+        }
         else{
             res.send("Search " + website);
         }
