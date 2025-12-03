@@ -4,32 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <style>
+        body{
+            padding-left: 10px;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
     <h1>Hello <%= username %></h1>
-    <p>Welcome to the dashboard</p>
-    <a href="/"><button>Homepage</button></a>
-    <a href="/users/logout"><button>Logout</button></a>
+    <h5>Welcome to the dashboard</h5>
+    <a href="/"><button type="button" class="btn btn-dark">Homepage</button></a>
+    <a href="/users/logout"><button type="button" class="btn btn-secondary">Logout</button></a>
     <hr>
     <h3>Create domain</h3>
     <form action="/users/domains" method="post">
-        <label for="domain">Domain: </label>
-        <input type="text" name="domain" id="domain" required>
+        <div class="input-group mb-3 w-25">
+            <span class="input-group-text">Domain name</span>
+            <input type="text" name="domain" class="form-control" required>
+        </div>
+
+        <div class="input-group mb-3 w-25">
+            <span class="input-group-text">Server's ip</span>
+            <input type="text" name="ip" class="form-control" required>
+        </div>
         <br>
-        <label for="ip">Server's IP: </label>
-        <input type="text" name="ip" id="ip" required>
-        <br>
-        <input type="submit" value="Create domain">
+        <input type="submit" value="Create domain" type="button" class="btn btn-success">
     </form>
     <br>
 
     <h3>Delete domain</h3>
-    <form id="deleteForm" action="">
-        <label for="deleteDomain">Domain name: </label>
-        <input type="text" id="deleteDomain" required>
+    <form id="deleteForm">
+        <div class="input-group mb-3 w-25">
+            <span class="input-group-text">Domain name</span>
+            <input type="text" id="deleteDomain" class="form-control" required>
+        </div>
         <br>
-        <!-- make this a non-submit button so clicking it doesn't submit the form -->
-        <button type="button" id="submitDelete">Delete domain</button>
+        <button type="button" class="btn btn-danger" id="submitDelete">Delete domain</button>
     </form>
     <p id="deleteResult"></p>
 

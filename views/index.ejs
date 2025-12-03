@@ -4,14 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meow</title>
+    <style>
+        body{
+            padding-left: 10px;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
     <h1>Welcome to Meow</h1>
-    <p>The meow:// protocol</p>
+    <h5>The meow:// protocol</h5>
     <form action="/websites" method="get">
-        <label for="website">Search something or type an URL </label>
-        <input type="text" name="website" id="website" required>
-        <input type="submit" value="Open">
+        <div class="input-group mb-3 w-25">
+            <span class="input-group-text">Website</span>
+            <input type="text" name="website" id="website" class="form-control" title="Start with meow:// to enter a meow website and with https:// to enter a normal website." required>
+            <input type="submit" value="Open" class="btn btn-success" type="button">
+        </div>
     </form>
 </body>
 </html>
